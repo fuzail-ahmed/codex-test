@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package todo.v1;
+
+option go_package = "github.com/fuzail-ahmed/codex-test/shared/gen/todo/v1;todo_v1";
+
+message Todo {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  Status status = 4;
+  int64 created_at_unix = 5;
+  int64 updated_at_unix = 6;
+}
+
+enum Status {
+  STATUS_UNSPECIFIED = 0;
+  STATUS_PENDING = 1;
+  STATUS_DONE = 2;
+}
+
+message CreateTodoRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message CreateTodoResponse {
+  Todo todo = 1;
+}
+
+message BulkCreateTodosRequest {
+  repeated CreateTodoRequest items = 1;
+}
+
+message BulkCreateTodosResponse {
+  repeated Todo todos = 1;
+}
+
+message GetTodoRequest {
+  string id = 1;
+}
+
+message GetTodoResponse {
+  Todo todo = 1;
+}
+
+message ListTodosRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message ListTodosResponse {
+  repeated Todo todos = 1;
+}
+
+message UpdateTodoRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  Status status = 4;
+}
+
+message UpdateTodoResponse {
+  Todo todo = 1;
+}
+
+message DeleteTodoRequest {
+  string id = 1;
+}
+
+message DeleteTodoResponse {
+  bool deleted = 1;
+}
+
+service TodoService {
+  rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse);
+  rpc BulkCreateTodos(BulkCreateTodosRequest) returns (BulkCreateTodosResponse);
+  rpc GetTodo(GetTodoRequest) returns (GetTodoResponse);
+  rpc ListTodos(ListTodosRequest) returns (ListTodosResponse);
+  rpc UpdateTodo(UpdateTodoRequest) returns (UpdateTodoResponse);
+  rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
+}

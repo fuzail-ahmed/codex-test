@@ -1,0 +1,7 @@
+# Tiltfile for local dev
+
+docker_build('todo-api', '.', dockerfile='infra/dev/Dockerfile')
+
+k8s_yaml(['infra/dev/k8s/postgres.yaml', 'infra/dev/k8s/todo-api.yaml'])
+
+k8s_resource('todo-api', port_forwards=[8080])

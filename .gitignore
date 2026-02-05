@@ -1,0 +1,7 @@
+# Ignore build output and local env
+/bin/
+*.log
+.env
+
+# Go
+/cover.out
